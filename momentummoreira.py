@@ -68,12 +68,3 @@ plt.title("Boxplot do Tempo de Serviço")
 
 plt.tight_layout()
 plt.show()
-
-# e. Principais interpretações
-interpretacoes = {
-    "Estatísticas Descritivas": estatisticas,
-    "Outliers": outliers.sum(),  # Contagem de outliers por coluna
-    "Correlação": correlacao,
-}
-
-interpretacoes
