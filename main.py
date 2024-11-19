@@ -1,35 +1,16 @@
-from collections import deque
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import functions
 
-def simulador_atendimento(dados):
-    fila = deque()  # Fila de atendimento
-    tempo_atual = 0  # Tempo atual do simulador
-    tempo_total = 0  # Acumulador do tempo total de atendimento
-    atendimentos = []  # Lista para armazenar os resultados dos atendimentos
+import os
 
-    for chegada, servico in dados:
-        # Verifica se alguém precisa ser atendido antes de uma nova chegada
-        if fila:
-            while fila and fila[0][0] <= chegada:
-                atendimento = fila.popleft()
-                tempo_atual = max(tempo_atual, atendimento[0]) + atendimento[1]
-                tempo_total += tempo_atual - atendimento[0]
-        
-        # Adiciona o novo atendimento à fila
-        fila.append((chegada, servico))
+os.environ['TCL_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tcl8.6'
+os.environ['TK_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tk8.6'
 
-    # Processa os atendimentos restantes
-    while fila:
-        atendimento = fila.popleft()
-        tempo_atual = max(tempo_atual, atendimento[0]) + atendimento[1]
-        tempo_total += tempo_atual - atendimento[0]
 
-    # Calculando a média do tempo de espera
-    num_atendimentos = len(dados)
-    tempo_medio_espera = tempo_total / num_atendimentos if num_atendimentos > 0 else 0
-
-    return tempo_medio_espera
-
-# Dados de entrada
+# Dados fornecidos
 dados = [
     (3, 17), (6, 16), (9, 16), (3, 20), (6, 16), (4, 11), (1, 12), (3, 20), (14, 23), (6, 14),
     (8, 10), (6, 24), (3, 19), (3, 24), (8, 23), (7, 12), (3, 16), (10, 15), (2, 21), (4, 14),
@@ -49,8 +30,19 @@ dados = [
     (0, 12), (5, 24), (7, 15), (7, 22), (5, 16), (1, 18), (6, 19), (3, 23), (6, 15), (0, 23)
 ]
 
-# Executando o simulador
-tempo_medio_espera = simulador_atendimento(dados)
+# Convertendo para DataFrame
+df = pd.DataFrame(dados, columns=["Tempo Chegada", "Tempo Serviço"])
 
-# Exibindo o resultado
-print(f"Tempo médio de espera: {tempo_medio_espera:.2f} unidades de tempo")
+# a. Estatísticas descritivas
+estatisticas = df.describe()
+
+# b. Análise de Outliers - utilizando o IQR (Interquartile Range)
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+IQR = Q3 - Q1
+outliers = ((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR)))
+
+# d. Análises Gráficas
+functions.time_distribuition(df)
+functions.showOutliers(df)
+functions.correlation(df)
