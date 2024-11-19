@@ -4,12 +4,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import functions
 
-import os
-
-os.environ['TCL_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tcl8.6'
-os.environ['TK_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tk8.6'
-
-
 # Dados fornecidos
 dados = [
     (3, 17), (6, 16), (9, 16), (3, 20), (6, 16), (4, 11), (1, 12), (3, 20), (14, 23), (6, 14),
