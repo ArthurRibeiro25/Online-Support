@@ -2,6 +2,13 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import functions
+
+import os
+
+os.environ['TCL_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tcl8.6'
+os.environ['TK_LIBRARY'] = 'C:/Users/ribei/AppData/Local/Programs/Python/Python313/tcl/tk8.6'
+
 
 # Dados fornecidos
 dados = [
@@ -35,42 +42,7 @@ Q3 = df.quantile(0.75)
 IQR = Q3 - Q1
 outliers = ((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR)))
 
-# c. Análise de Correlação
-correlacao = df.corr()
-
 # d. Análises Gráficas
-
-def time_distribuition(df):
-    # Histograma para ver a distribuição dos tempos
-    plt.figure(figsize=(12, 6))
-    plt.subplot(1, 2, 1)
-    plt.hist(df["Tempo Chegada"], bins=20, color='blue', alpha=0.7)
-    plt.title("Distribuição do Tempo de Chegada")
-    plt.xlabel("Tempo Chegada")
-    plt.ylabel("Frequência")
-
-    plt.subplot(1, 2, 2)
-    plt.hist(df["Tempo Serviço"], bins=20, color='green', alpha=0.7)
-    plt.title("Distribuição do Tempo de Serviço")
-    plt.xlabel("Tempo Serviço")
-    plt.ylabel("Frequência")
-
-    plt.tight_layout()
-    plt.show()
-
-def showOutliers(df):
-    # Boxplot para detectar outliers
-    plt.figure(figsize=(12, 6))
-    plt.subplot(1, 2, 1)
-    sns.boxplot(x=df["Tempo Chegada"])
-    plt.title("Boxplot do Tempo de Chegada")
-
-    plt.subplot(1, 2, 2)
-    sns.boxplot(x=df["Tempo Serviço"])
-    plt.title("Boxplot do Tempo de Serviço")
-
-    plt.tight_layout()
-    plt.show()
-
-time_distribuition(df)
-showOutliers(df)
+functions.time_distribuition(df)
+functions.showOutliers(df)
+functions.correlation(df)
