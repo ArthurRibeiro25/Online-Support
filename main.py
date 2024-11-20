@@ -38,4 +38,3 @@ functions.correlation(df)
 
 # d. Análises Gráficas
 functions.time_distribuition(df)
-
