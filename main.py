@@ -27,6 +27,27 @@ dados = [
 # Convertendo para DataFrame
 df = pd.DataFrame(dados, columns=["Tempo Chegada", "Tempo Serviço"])
 
+# 3. 3 metricas de desempenho
+num1, num2 = functions.calcular_taxas_media(df)
+
+avg_arrival_rate = float(f"{num1: .3f}")
+avg_service_rate = float(f"{num2: .3f}")
+
+#Metricas:
+
+#Taxa de utilização do profissinal de suporte
+employee_count = float(input('Número de funcionários: '))
+usage_fee = functions.calcular_taxa_utilizacao(avg_arrival_rate, avg_service_rate, employee_count)
+
+#Tempo medio de espera
+service_fee = functions.service_fee(avg_service_rate)
+
+#Probabilidade de espera
+waiting_prob = functions.calcular_probabilidade_espera(avg_arrival_rate, avg_service_rate)
+
+#Gráfico das metricas
+functions.metrics_graph(usage_fee, service_fee, waiting_prob)
+
 # a. Estatísticas descritivas
 functions.descriptive_stats(df)
 

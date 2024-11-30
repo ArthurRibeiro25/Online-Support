@@ -143,3 +143,53 @@ def descriptive_stats(df):
 
     # Exibir o gráfico
     plt.show()
+
+def calcular_taxas_media(df):
+    # Extrair tempos de chegada e de serviço
+    tempos_chegada =  df["Tempo Chegada"]
+    tempos_servico = df["Tempo Serviço"]
+        
+    # Número total de chamados
+    num_chamados = len(df)
+        
+    # Calcular médias dos tempos de chegada e serviço
+    media_tempos_chegada = sum(tempos_chegada) / num_chamados
+    media_tempos_servico = sum(tempos_servico) / num_chamados
+        
+    # Calcular taxas médias
+    taxa_media_chegada = 1 / media_tempos_chegada if media_tempos_chegada != 0 else 0
+    taxa_media_atendimento = 1 / media_tempos_servico if media_tempos_servico != 0 else 0    
+    
+    return taxa_media_chegada, taxa_media_atendimento
+
+def calcular_taxa_utilizacao(avg_arrival_rate, avg_service_rate, employee_count):
+
+    usage_fee = avg_arrival_rate / (avg_service_rate * employee_count)
+
+    return usage_fee
+
+def service_fee(avg_service_rate):
+
+    service_fee = 1 / avg_service_rate
+
+    return service_fee
+
+def calcular_probabilidade_espera(avg_arrival_rate, avg_service_rate):
+    
+    rho = avg_arrival_rate / avg_service_rate
+    return rho
+
+def metrics_graph(usage_fee, service_fee, waiting_prob):
+    labels = ['Taxa de Utilização', 'Taxa de atendimento', 'Probabilidade de espera']
+    values = [usage_fee, service_fee, waiting_prob]
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(labels, values, color=['blue', 'green', 'orange'])
+
+    # Adicionar título e rótulos
+    plt.title('Métricas de Desempenho do Processo de Suporte Online')
+    plt.xlabel('Métricas')
+    plt.ylabel('Valor')
+
+    # Exibir o gráfico
+    plt.show()
