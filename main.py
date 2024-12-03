@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import functions
+import os
 
 # Dados fornecidos
 dados = [
@@ -35,27 +36,48 @@ avg_service_rate = float(f"{num2: .3f}")
 
 #Metricas:
 
-#Taxa de utilização do profissinal de suporte
-employee_count = float(input('Número de funcionários: '))
-usage_fee = functions.calcular_taxa_utilizacao(avg_arrival_rate, avg_service_rate, employee_count)
+op = 1
 
-#Tempo medio de espera
-service_fee = functions.service_fee(avg_service_rate)
+while(op != 0):
+    op = int(input('SUPORTE ONLINE' +
+               '\n0 - Finalizar' +
+               '\n1 - Gráfico de métricas' + 
+               '\n2 - Estatísticas descritivas' +
+               '\n3 - Mostrar Outliers' +
+               '\n4 - Mostrar correlação' + 
+               '\n5 - Distribuição de tempo' + 
+               '\nOpção: '))
+    if(op == 1):
+        os.system('clear')
+        #Taxa de utilização do profissinal de suporte
+        employee_count = float(input('Número de funcionários: '))
+        usage_fee = functions.calcular_taxa_utilizacao(avg_arrival_rate, avg_service_rate, employee_count)
 
-#Probabilidade de espera
-waiting_prob = functions.calcular_probabilidade_espera(avg_arrival_rate, avg_service_rate)
+        #Tempo medio de espera
+        service_fee = functions.service_fee(avg_service_rate)
 
-#Gráfico das metricas
-functions.metrics_graph(usage_fee, service_fee, waiting_prob)
+        #Probabilidade de espera
+        waiting_prob = functions.calcular_probabilidade_espera(avg_arrival_rate, avg_service_rate)
 
-# a. Estatísticas descritivas
-functions.descriptive_stats(df)
-
-# b. Análise de Outliers - utilizando o IQR (Interquartile Range)
-functions.showOutliers(df)
-
-# c. Análise de correlação
-functions.correlation(df)
-
-# d. Análises Gráficas
-functions.time_distribuition(df)
+        #Gráfico das metricas
+        functions.metrics_graph(usage_fee, service_fee, waiting_prob)
+    elif(op == 2):
+        os.system('clear')
+        # a. Estatísticas descritivas
+        functions.descriptive_stats(df)
+    elif(op == 3):
+        os.system('clear')
+        # b. Análise de Outliers - utilizando o IQR (Interquartile Range)
+        functions.showOutliers(df)
+    elif(op == 4):
+        os.system('clear')
+        # c. Análise de correlação
+        functions.correlation(df)
+    elif(op == 5):
+        os.system('clear')
+        # d. Análises Gráficas
+        functions.time_distribuition(df)
+    elif(op == 0):
+        print('Finalizando')
+    elif(op > 6):
+        print('Digite uma opção válida!')
